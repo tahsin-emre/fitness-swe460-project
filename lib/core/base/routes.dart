@@ -1,4 +1,6 @@
-import 'package:fitness/views/main/splash_view.dart';
+import 'package:fitness/views/auth/auth_v.dart';
+import 'package:fitness/views/main/home_v.dart';
+import 'package:fitness/views/main/splash_v.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -12,9 +14,9 @@ class Routes {
       case splash:
         page = const SplashView();
       case auth:
-        page = Container();
+        page = AuthView();
       case home:
-        page = Container();
+        page = const HomeView();
       default:
         page = Container();
     }

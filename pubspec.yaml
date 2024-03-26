@@ -18,12 +18,10 @@ dependencies:
   easy_localization: 
   easy_logger:
   ##ui
-  persistent_bottom_nav_bar_v2: 
+  persistent_bottom_nav_bar_v2: ^4.2.8
   icons_plus: 
   phone_form_field:
   pinput:  
-
-
 
 dev_dependencies:
   flutter_test:
