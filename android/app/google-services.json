@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "444788873260",
+    "project_id": "fitness-swe460",
+    "storage_bucket": "fitness-swe460.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444788873260:android:4f72cc96699dcf74c11989",
+        "android_client_info": {
+          "package_name": "com.tahsinemre.fitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsbuHgJLGuJ8QLBpdw0q16PnL-Vbt1mTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

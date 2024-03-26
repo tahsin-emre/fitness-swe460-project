@@ -1,0 +1,40 @@
+name: fitness
+description: "Project for SWE460 Course"
+publish_to: 'none' 
+version: 1.0.0+1
+environment:
+  sdk: '>=3.3.2 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  hive:
+  hive_flutter:
+  connectivity_plus:
+  cloud_firestore:
+  firebase_core: 
+  firebase_auth: 
+  firebase_storage:
+  easy_localization: 
+  easy_logger:
+  ##ui
+  persistent_bottom_nav_bar_v2: 
+  icons_plus: 
+  phone_form_field:
+  pinput:  
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  hive_generator:
+  build_runner:
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/locales/
