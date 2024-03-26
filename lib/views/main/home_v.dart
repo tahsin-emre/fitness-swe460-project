@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fitness/core/constants/texts.dart';
+import 'package:fitness/views/diet/diet_v.dart';
 import 'package:fitness/views/profile/profile_v.dart';
+import 'package:fitness/views/workout/workout_v.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class HomeView extends StatelessWidget {
@@ -18,18 +21,14 @@ class HomeView extends StatelessWidget {
         navBarStyle: NavBarStyle.style11,
         onItemSelected: (value) {},
         screens: [
-          ProfileView(context),
-          ProfileView(context),
-          ProfileView(context),
-          ProfileView(context),
+          WorkoutView(context),
+          DietView(context),
           ProfileView(context),
         ],
         items: [
-          navItem(Icons.person, Texts.profile),
-          navItem(Icons.person, Texts.profile),
-          navItem(Icons.person, Texts.profile),
-          navItem(Icons.person, Texts.profile),
-          navItem(Icons.person, Texts.profile),
+          navItem(FontAwesome.dumbbell_solid, Texts.workout),
+          navItem(FontAwesome.bowl_food_solid, Texts.diet),
+          navItem(FontAwesome.user_solid, Texts.profile),
         ],
       ),
     );
