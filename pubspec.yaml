@@ -11,10 +11,10 @@ dependencies:
   hive:
   hive_flutter:
   connectivity_plus:
-  cloud_firestore:
-  firebase_core: 
-  firebase_auth: 
-  firebase_storage:
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.5
+  firebase_storage: ^11.6.6 
+  cloud_firestore: ^4.15.5
   easy_localization: 
   easy_logger:
   ##ui

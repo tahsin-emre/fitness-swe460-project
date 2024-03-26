@@ -136,14 +136,19 @@ class AuthView extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       child: OutlinedButton(
-        onPressed: () {
+        onPressed: () async {
           if (status == AuthEnum.phone) {
             if (!phoneCont.value.isValid()) {
               ScaffoldMessenger.of(_).showSnackBar(
                 SnackBar(content: Text(Texts.phoneNumberAlert.tr())),
               );
             } else {
-              AuthService.phoneVerify(phoneCont.value.international);
+              // AuthService.phoneVerify(phoneCont.value.international);
+              AuthService.testLogin().then((value) {
+                if (value == null) {
+                  AuthService.otpStream.sink.add(AuthEnum.register);
+                }
+              });
               // AuthService.otpStream.sink.add(AuthEnum.otp);
             }
           } else if (status == AuthEnum.error) {
