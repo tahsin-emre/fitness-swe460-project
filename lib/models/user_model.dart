@@ -17,7 +17,7 @@ class UserModel {
   @HiveField(4)
   late String phone;
   @HiveField(5)
-  String? image;
+  late String? image;
 
   UserModel();
 
