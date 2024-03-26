@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fitness/core/constants/texts.dart';
 import 'package:fitness/views/diet/diet_v.dart';
+import 'package:fitness/views/goal/goal_v.dart';
 import 'package:fitness/views/profile/profile_v.dart';
 import 'package:fitness/views/workout/workout_v.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +24,13 @@ class HomeView extends StatelessWidget {
         screens: [
           WorkoutView(context),
           DietView(context),
+          GoalView(context),
           ProfileView(context),
         ],
         items: [
           navItem(FontAwesome.dumbbell_solid, Texts.workout),
           navItem(FontAwesome.bowl_food_solid, Texts.diet),
+          navItem(FontAwesome.bullseye_solid, Texts.goal),
           navItem(FontAwesome.user_solid, Texts.profile),
         ],
       ),

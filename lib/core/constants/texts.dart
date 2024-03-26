@@ -5,6 +5,7 @@ class Texts {
   static const String profile = 'Profile';
   static const String workout = 'Workout';
   static const String diet = 'Diet';
+  static const String goal = 'Goal';
   static const String phoneNumber = 'Phone Number';
   static const String phoneNumberAlert = 'Phone Number is Invalid';
   static const String someThingWentWrong = 'Something Went Wrong';
