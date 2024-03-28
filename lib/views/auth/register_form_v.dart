@@ -147,10 +147,10 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         tempUser.surname = value;
         break;
       case Texts.weight:
-        tempUser.weight = double.tryParse(value) ?? 0;
+        tempUser.weight = int.tryParse(value) ?? 0;
         break;
       case Texts.height:
-        tempUser.height = double.tryParse(value) ?? 0;
+        tempUser.height = int.tryParse(value) ?? 0;
         break;
       case Texts.birthDate:
         log('date $value');

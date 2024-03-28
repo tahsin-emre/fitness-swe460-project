@@ -79,21 +79,4 @@ class AuthService {
       return null;
     }
   }
-
-  static Future<UserModel?> testLogin() async {
-    //  var conf = await  DB.auth.signInWithPhoneNumber('+905102206960');
-    try {
-      DB.auth.signInAnonymously();
-      UserModel? result = await getUserModel();
-      if (result != null) {
-        otpStream.sink.add(AuthEnum.success);
-      } else {
-        otpStream.sink.add(AuthEnum.register);
-      }
-      return result;
-    } on Exception catch (e) {
-      log(e.toString());
-      return null;
-    }
-  }
 }

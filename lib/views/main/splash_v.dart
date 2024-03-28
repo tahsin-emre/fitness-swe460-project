@@ -38,7 +38,7 @@ class SplashView extends StatelessWidget {
       if (userModel == null) {
         return Routes.auth;
       } else {
-        // HiveService.userBox.put(0, userModel);
+        HiveService.userBox.put(0, userModel);
         return Routes.home;
       }
     } on Exception catch (e) {

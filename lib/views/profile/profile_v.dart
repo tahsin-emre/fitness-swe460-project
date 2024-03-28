@@ -24,14 +24,16 @@ class ProfileView extends StatelessWidget {
           ),
           const Divider(),
           userInfo(),
-          ListTile(
-            leading: const Icon(Icons.power_settings_new),
-            title: const Text('Log Out'),
-            onTap: () {
-              DB.auth.signOut();
-              Navigator.pushNamedAndRemoveUntil(pushContext, Routes.auth, (route) => false);
-              HiveService.userBox.clear();
-            },
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.power_settings_new),
+              title: const Text('Log Out'),
+              onTap: () {
+                DB.auth.signOut();
+                Navigator.pushNamedAndRemoveUntil(pushContext, Routes.auth, (route) => false);
+                HiveService.userBox.clear();
+              },
+            ),
           )
         ],
       ),
@@ -66,7 +68,7 @@ class ProfileView extends StatelessWidget {
               style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
             Text(
-              user.bmi.toString(),
+              'BMI: ${user.bmi?.toStringAsFixed(2)}',
               style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ],

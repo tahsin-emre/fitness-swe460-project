@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness/core/constants/hive_types.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -19,15 +17,15 @@ class UserModel {
   @HiveField(4)
   String? image;
   @HiveField(5)
-  double? weight;
+  num? weight;
   @HiveField(6)
-  double? height;
+  num? height;
   @HiveField(7)
   DateTime? birthDate;
   @HiveField(8)
   String? gender;
   @HiveField(9)
-  double? bmi;
+  num? bmi;
   @HiveField(10)
   String? fullname;
 
@@ -46,7 +44,11 @@ class UserModel {
     height = data['height'];
     birthDate = (data['birthDate'] as Timestamp?)?.toDate();
     gender = data['gender'];
-    bmi = weight ?? 0 / pow(((height) ?? 1) / 100, 2);
+    bmi = bmiCalc(weight ?? 0, height ?? 1);
     fullname = '$name $surname';
+  }
+
+  double bmiCalc(num w, num h) {
+    return w / ((h * h) / 10000);
   }
 }

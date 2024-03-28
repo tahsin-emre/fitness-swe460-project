@@ -3,7 +3,7 @@ class Texts {
   static const String login = 'Log In';
   static const String register = 'Register';
   static const String profile = 'Profile';
-  static const String workout = 'Workout';
+  static const String workout = 'Exercise';
   static const String diet = 'Diet';
   static const String calorie = 'Calorie';
   static const String phoneNumber = 'Phone Number';
