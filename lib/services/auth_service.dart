@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness/core/enums/auth_enum.dart';
+import 'package:fitness/core/extensions/user_ext.dart';
 import 'package:fitness/models/user_model.dart';
 import 'package:fitness/services/db.dart';
 
@@ -26,12 +27,8 @@ class AuthService {
     }
   }
 
-  static Future<UserModel> register(String name, String surname) async {
-    await DB.db.collection('users').doc(DB.auth.currentUser!.uid).set({
-      'name': name,
-      'surname': surname,
-      'phone': DB.auth.currentUser!.phoneNumber,
-    });
+  static Future<UserModel> register(UserModel tempUser) async {
+    await DB.db.collection('users').doc(DB.auth.currentUser!.uid).set(tempUser.toMap());
     return (await getUserModel())!;
   }
 
@@ -50,6 +47,7 @@ class AuthService {
           },
           verificationFailed: (FirebaseAuthException e) {
             error = e.code;
+            log(e.toString());
             log('VERFAIL');
             otpStream.sink.add(AuthEnum.error);
           },

@@ -30,7 +30,7 @@ class ProfileView extends StatelessWidget {
             onTap: () {
               DB.auth.signOut();
               Navigator.pushNamedAndRemoveUntil(pushContext, Routes.auth, (route) => false);
-              HiveService.userBox!.clear();
+              HiveService.userBox.clear();
             },
           )
         ],
@@ -40,7 +40,7 @@ class ProfileView extends StatelessWidget {
 
   Widget userInfo() {
     return ValueListenableBuilder(
-      valueListenable: HiveService.userBox!.listenable(),
+      valueListenable: HiveService.userBox.listenable(),
       builder: (_, box, child) {
         UserModel user = box.get(0)!;
         return Column(
@@ -58,11 +58,15 @@ class ProfileView extends StatelessWidget {
               ),
             ),
             Text(
-              user.fullname,
+              user.fullname ?? '',
               style: const TextStyle(fontSize: 20),
             ),
             Text(
               user.phone,
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+            Text(
+              user.bmi.toString(),
               style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ],

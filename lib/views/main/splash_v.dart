@@ -32,12 +32,13 @@ class SplashView extends StatelessWidget {
     // ConnectivityResult cnnct = await Connectivity().checkConnectivity();
     try {
       await HiveService.initialize();
+      HiveService.userBox.clear();
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
       UserModel? userModel = await AuthService.getUserModel();
       if (userModel == null) {
         return Routes.auth;
       } else {
-        HiveService.userBox!.put(0, userModel);
+        // HiveService.userBox.put(0, userModel);
         return Routes.home;
       }
     } on Exception catch (e) {

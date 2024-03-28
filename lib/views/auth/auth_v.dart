@@ -45,31 +45,13 @@ class AuthView extends StatelessWidget {
                         borderRadius: 35.toRadiusAll(),
                       ),
                       child: Image.asset(Images.auth)),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 10),
                   Text(
                     Texts.loginTitle.tr(),
                     style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 30),
-                  Card.outlined(
-                    elevation: 1.3,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          if (snapshot.data == AuthEnum.phone) phoneForm(true),
-                          if (snapshot.data == AuthEnum.otp) phoneForm(false),
-                          if (snapshot.data == AuthEnum.otp)
-                            otpForm(context, snapshot.data ?? AuthEnum.error),
-                          if (snapshot.data == AuthEnum.error) onError(),
-                          if (snapshot.data == AuthEnum.register) RegisterFormView(),
-                          if (snapshot.data != AuthEnum.otp && snapshot.data != AuthEnum.register)
-                            actionButton(context, snapshot.data ?? AuthEnum.error),
-                        ],
-                      ),
-                    ),
-                  ),
+                  signForm(context, snapshot.data ?? AuthEnum.error)
                 ],
               ),
             );
@@ -79,24 +61,63 @@ class AuthView extends StatelessWidget {
         });
   }
 
-  Widget phoneForm(bool enable) {
+  Widget signForm(BuildContext context, AuthEnum data) {
+    return Card.outlined(
+      elevation: 1.3,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            if (data == AuthEnum.phone) phoneForm(context, true),
+            if (data == AuthEnum.otp) phoneForm(context, false),
+            if (data == AuthEnum.otp) otpForm(context, data),
+            if (data == AuthEnum.error) onError(),
+            if (data == AuthEnum.register) RegisterFormView(phoneCont.value.international),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget phoneForm(BuildContext context, bool enable) {
     return Container(
       margin: const EdgeInsets.all(10),
-      child: PhoneFormField(
-        controller: phoneCont,
-        countrySelectorNavigator: const CountrySelectorNavigator.modalBottomSheet(),
-        enabled: enable,
-        countryButtonPadding: null,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: 20.toRadiusAll()),
-          labelText: Texts.phoneNumber,
-        ),
-        isCountrySelectionEnabled: true,
-        isCountryButtonPersistent: true,
-        showDialCode: true,
-        showIsoCodeInInput: false,
-        showFlagInInput: true,
-        flagSize: 24,
+      child: Column(
+        children: [
+          PhoneFormField(
+            controller: phoneCont,
+            countrySelectorNavigator: const CountrySelectorNavigator.modalBottomSheet(),
+            enabled: enable,
+            countryButtonPadding: null,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(borderRadius: 20.toRadiusAll()),
+              labelText: Texts.phoneNumber,
+            ),
+            isCountrySelectionEnabled: true,
+            isCountryButtonPersistent: true,
+            showDialCode: true,
+            showIsoCodeInInput: false,
+            showFlagInInput: true,
+            flagSize: 24,
+          ),
+          if (enable)
+            Container(
+              alignment: Alignment.centerRight,
+              margin: const EdgeInsets.all(10),
+              child: OutlinedButton(
+                  onPressed: () async {
+                    if (!phoneCont.value.isValid()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(Texts.phoneNumberAlert.tr())),
+                      );
+                    } else {
+                      AuthService.phoneVerify(phoneCont.value.international);
+                    }
+                  },
+                  child: Text(Texts.login.tr())),
+            )
+        ],
       ),
     );
   }
@@ -111,51 +132,12 @@ class AuthView extends StatelessWidget {
         onCompleted: (pin) async {
           await AuthService.otpVerify(pin).then((userModel) {
             if (userModel != null) {
-              HiveService.userBox!.put(0, userModel);
+              HiveService.userBox.put(0, userModel);
               AuthService.otpStream.close();
               Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
             }
           });
         },
-      ),
-    );
-  }
-
-  Widget actionButton(BuildContext _, AuthEnum status) {
-    String text;
-    switch (status) {
-      case AuthEnum.phone:
-        text = Texts.login;
-        break;
-      case AuthEnum.error:
-        text = Texts.tryAgain;
-        break;
-      default:
-        text = Texts.login;
-    }
-    return Container(
-      margin: const EdgeInsets.all(10),
-      child: OutlinedButton(
-        onPressed: () async {
-          if (status == AuthEnum.phone) {
-            if (!phoneCont.value.isValid()) {
-              ScaffoldMessenger.of(_).showSnackBar(
-                SnackBar(content: Text(Texts.phoneNumberAlert.tr())),
-              );
-            } else {
-              // AuthService.phoneVerify(phoneCont.value.international);
-              AuthService.testLogin().then((value) {
-                if (value == null) {
-                  AuthService.otpStream.sink.add(AuthEnum.register);
-                }
-              });
-              // AuthService.otpStream.sink.add(AuthEnum.otp);
-            }
-          } else if (status == AuthEnum.error) {
-            AuthService.otpStream.sink.add(AuthEnum.phone);
-          }
-        },
-        child: Text(text.tr()),
       ),
     );
   }
@@ -170,7 +152,16 @@ class AuthView extends StatelessWidget {
               Texts.someThingWentWrong.tr(),
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            Text(AuthService.error)
+            Text(AuthService.error),
+            Container(
+              alignment: Alignment.centerRight,
+              margin: const EdgeInsets.all(10),
+              child: OutlinedButton(
+                  onPressed: () async {
+                    AuthService.otpStream.sink.add(AuthEnum.phone);
+                  },
+                  child: Text(Texts.tryAgain.tr())),
+            )
           ],
         ),
       ),

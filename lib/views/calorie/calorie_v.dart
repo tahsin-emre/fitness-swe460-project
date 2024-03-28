@@ -3,9 +3,9 @@ import 'package:fitness/core/constants/texts.dart';
 import 'package:fitness/core/extensions/ui_exts.dart';
 import 'package:flutter/material.dart';
 
-class GoalView extends StatelessWidget {
+class CalorieView extends StatelessWidget {
   final BuildContext pushContext;
-  const GoalView(this.pushContext, {super.key});
+  const CalorieView(this.pushContext, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,10 @@ class GoalView extends StatelessWidget {
         children: [
           Padding(
             padding: 10.toEdgeAll(),
-            child: Text(Texts.goal.tr(), style: const TextStyle(fontSize: 24)),
+            child: Text(
+              Texts.calorie.tr(),
+              style: const TextStyle(fontSize: 24),
+            ),
           ),
           const Divider(),
         ],

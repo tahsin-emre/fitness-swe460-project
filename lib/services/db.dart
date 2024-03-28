@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class DB {
-  static late FirebaseApp app;
+  DB._();
   static var db = FirebaseFirestore.instance;
   static var auth = FirebaseAuth.instance;
 
-  DB._();
+  static Future appinit() async {}
 }
