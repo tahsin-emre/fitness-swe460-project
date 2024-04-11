@@ -4,8 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness/core/base/routes.dart';
 import 'package:fitness/gitsecret/firebase_options.dart';
 import 'package:fitness/models/user_model.dart';
-import 'package:fitness/services/auth_service.dart';
 import 'package:fitness/services/hive_service.dart';
+import 'package:fitness/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatelessWidget {
@@ -34,7 +34,7 @@ class SplashView extends StatelessWidget {
       await HiveService.initialize();
       HiveService.userBox.clear();
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      UserModel? userModel = await AuthService.getUserModel();
+      UserModel? userModel = await UserService.getUserModel();
       if (userModel == null) {
         return Routes.auth;
       } else {

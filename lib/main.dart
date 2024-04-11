@@ -23,5 +23,4 @@ void main() async {
       child: const FitnessApp(),
     ),
   );
-  // runApp(FitnessApp());
 }

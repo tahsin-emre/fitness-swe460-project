@@ -27,13 +27,14 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..birthDate = fields[7] as DateTime?
       ..gender = fields[8] as String?
       ..bmi = fields[9] as num?
-      ..fullname = fields[10] as String?;
+      ..fullname = fields[10] as String?
+      ..dailyCalorie = fields[11] as num?;
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -55,7 +56,9 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(9)
       ..write(obj.bmi)
       ..writeByte(10)
-      ..write(obj.fullname);
+      ..write(obj.fullname)
+      ..writeByte(11)
+      ..write(obj.dailyCalorie);
   }
 
   @override
@@ -64,5 +67,7 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserModelAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      other is UserModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

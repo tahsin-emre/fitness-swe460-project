@@ -1,6 +1,7 @@
 class Texts {
   static const String fitnessapp = 'Fitness App';
   static const String login = 'Log In';
+  static const String logout = 'Log Out';
   static const String register = 'Register';
   static const String profile = 'Profile';
   static const String workout = 'Exercise';
@@ -22,4 +23,6 @@ class Texts {
   static const String ok = 'OK';
   static const String cancel = 'Cancel';
   static const String taptochange = 'Tap to Change';
+  static const String edit = 'Edit';
+  static const String update = 'Update';
 }

@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness/core/enums/auth_enum.dart';
-import 'package:fitness/core/extensions/user_ext.dart';
 import 'package:fitness/models/user_model.dart';
 import 'package:fitness/services/db.dart';
+import 'package:fitness/services/user_service.dart';
 
 class AuthService {
   AuthService._();
@@ -16,20 +16,6 @@ class AuthService {
   static void init() {
     otpStream = StreamController();
     otpStream.sink.add(AuthEnum.phone);
-  }
-
-  static Future<UserModel?> getUserModel() async {
-    var data = await DB.db.collection('users').doc(DB.auth.currentUser?.uid).get();
-    if (data.exists) {
-      return UserModel.fromDS(data);
-    } else {
-      return null;
-    }
-  }
-
-  static Future<UserModel> register(UserModel tempUser) async {
-    await DB.db.collection('users').doc(DB.auth.currentUser!.uid).set(tempUser.toMap());
-    return (await getUserModel())!;
   }
 
   static Future phoneVerify(String phoneNumber) async {
@@ -66,7 +52,7 @@ class AuthService {
       PhoneAuthCredential credential =
           PhoneAuthProvider.credential(verificationId: vid, smsCode: code);
       await DB.auth.signInWithCredential(credential);
-      UserModel? result = await getUserModel();
+      UserModel? result = await UserService.getUserModel();
       if (result != null) {
         otpStream.sink.add(AuthEnum.success);
       } else {

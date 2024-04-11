@@ -28,6 +28,8 @@ class UserModel {
   num? bmi;
   @HiveField(10)
   String? fullname;
+  @HiveField(11)
+  num? dailyCalorie;
 
   UserModel();
 
@@ -46,9 +48,21 @@ class UserModel {
     gender = data['gender'];
     bmi = bmiCalc(weight ?? 0, height ?? 1);
     fullname = '$name $surname';
+    dailyCalorie = calorieCalc(weight ?? 0, height ?? 1, gender ?? '');
   }
 
-  double bmiCalc(num w, num h) {
+  num bmiCalc(num w, num h) {
     return w / ((h * h) / 10000);
+  }
+
+  num calorieCalc(num w, num h, String gender) {
+    num lmb = 0;
+    if (gender == 'Male') {
+      lmb = 0.407 * w + 0.267 * h - 19.2;
+    } else if (gender == 'Female') {
+      lmb = 0.252 * w + 0.473 * h - 48.3;
+    }
+
+    return 370 + (21.6 * lmb);
   }
 }

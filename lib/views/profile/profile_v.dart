@@ -5,6 +5,7 @@ import 'package:fitness/core/extensions/ui_exts.dart';
 import 'package:fitness/models/user_model.dart';
 import 'package:fitness/services/db.dart';
 import 'package:fitness/services/hive_service.dart';
+import 'package:fitness/views/profile/user_edit_v.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -24,18 +25,33 @@ class ProfileView extends StatelessWidget {
           ),
           const Divider(),
           userInfo(),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.power_settings_new),
-              title: const Text('Log Out'),
-              onTap: () {
-                DB.auth.signOut();
-                Navigator.pushNamedAndRemoveUntil(pushContext, Routes.auth, (route) => false);
-                HiveService.userBox.clear();
-              },
-            ),
+          myCard(
+            Icons.edit,
+            Texts.edit,
+            () {
+              showDialog(context: context, builder: (_) => UserEditView());
+            },
+          ),
+          myCard(
+            Icons.power_settings_new,
+            Texts.logout,
+            () {
+              DB.auth.signOut();
+              Navigator.pushNamedAndRemoveUntil(pushContext, Routes.auth, (route) => false);
+              HiveService.userBox.clear();
+            },
           )
         ],
+      ),
+    );
+  }
+
+  Widget myCard(IconData icon, String title, void Function() func) {
+    return Card(
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title.tr()),
+        onTap: () => func(),
       ),
     );
   }
@@ -65,6 +81,10 @@ class ProfileView extends StatelessWidget {
             ),
             Text(
               user.phone,
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+            Text(
+              'BMR: ${user.dailyCalorie?.toStringAsFixed(0)} kcal',
               style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
             Text(

@@ -6,6 +6,7 @@ import 'package:fitness/core/constants/texts.dart';
 import 'package:fitness/models/user_model.dart';
 import 'package:fitness/services/auth_service.dart';
 import 'package:fitness/services/hive_service.dart';
+import 'package:fitness/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +58,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: TextField(
         controller: controller,
-        keyboardType: numeric ? TextInputType.number : TextInputType.none,
+        keyboardType: numeric ? TextInputType.number : TextInputType.text,
         onChanged: (value) {
           updateUser(value, label);
           controller.selection =
@@ -185,7 +186,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       margin: const EdgeInsets.all(10),
       child: OutlinedButton(
           onPressed: () async {
-            await AuthService.register(tempUser).then((userModel) {
+            await UserService.register(tempUser).then((userModel) {
               HiveService.userBox.put(0, userModel);
               AuthService.otpStream.close();
               Navigator.pushNamedAndRemoveUntil(_, Routes.home, (route) => false);
