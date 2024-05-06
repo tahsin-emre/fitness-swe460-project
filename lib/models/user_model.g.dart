@@ -25,7 +25,7 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..weight = fields[5] as num?
       ..height = fields[6] as num?
       ..birthDate = fields[7] as DateTime?
-      ..gender = fields[8] as String?
+      ..gender = fields[8] as Genders
       ..bmi = fields[9] as num?
       ..fullname = fields[10] as String?
       ..dailyCalorie = fields[11] as num?;

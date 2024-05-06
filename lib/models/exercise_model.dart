@@ -1,12 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitness/core/constants/hive_types.dart';
 import 'package:fitness/core/enums/equipment_enum.dart';
 import 'package:fitness/core/enums/muscle_enum.dart';
+import 'package:hive_flutter/adapters.dart';
 
+part 'exercise_model.g.dart';
+
+@HiveType(typeId: HiveTypes.exerciseModel)
 class ExerciseModel {
-  late String id;
-  late String name;
-  late String? videoUrl;
+  @HiveField(0)
+  String? id;
+  @HiveField(1)
+  String? name;
+  @HiveField(2)
+  String? videoUrl;
+  @HiveField(3)
   late List<Muscles> muscleList = [];
+  @HiveField(4)
   late List<Equipments> equipmentList = [];
 
   ExerciseModel();

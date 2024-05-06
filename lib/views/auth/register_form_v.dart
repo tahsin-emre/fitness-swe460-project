@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fitness/core/base/routes.dart';
 import 'package:fitness/core/constants/texts.dart';
+import 'package:fitness/core/enums/gender_enum.dart';
 import 'package:fitness/models/user_model.dart';
 import 'package:fitness/services/auth_service.dart';
 import 'package:fitness/services/hive_service.dart';
@@ -28,7 +29,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
   }
 
   DateTime? dateOfBirth;
-  String? genderValue;
+  Genders genderValue = Genders.none;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -76,22 +77,22 @@ class _RegisterFormViewState extends State<RegisterFormView> {
   Widget genderSelector() {
     return Container(
       margin: const EdgeInsets.all(10),
-      child: DropdownButton<String?>(
+      child: DropdownButton<Genders>(
         value: genderValue,
         isExpanded: true,
         hint: const Text(Texts.gender),
         items: const [
           DropdownMenuItem(
-            value: Texts.male,
+            value: Genders.male,
             child: Text(Texts.male),
           ),
           DropdownMenuItem(
-            value: Texts.female,
+            value: Genders.female,
             child: Text(Texts.female),
           ),
         ],
         onChanged: (value) {
-          setState(() => genderValue = value);
+          setState(() => genderValue = value ?? Genders.none);
           updateUser(value, Texts.gender);
         },
       ),

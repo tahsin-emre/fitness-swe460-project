@@ -23,6 +23,7 @@ dependencies:
   icons_plus: 
   phone_form_field:
   pinput:  
+  video_player: 
 
 dev_dependencies:
   flutter_test:

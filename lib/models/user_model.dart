@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness/core/constants/hive_types.dart';
+import 'package:fitness/core/enums/gender_enum.dart';
 import 'package:hive_flutter/adapters.dart';
 
 part 'user_model.g.dart';
@@ -23,7 +24,7 @@ class UserModel {
   @HiveField(7)
   DateTime? birthDate;
   @HiveField(8)
-  String? gender;
+  Genders gender = Genders.none;
   @HiveField(9)
   num? bmi;
   @HiveField(10)
@@ -45,24 +46,23 @@ class UserModel {
     weight = data['weight'];
     height = data['height'];
     birthDate = (data['birthDate'] as Timestamp?)?.toDate();
-    gender = data['gender'];
+    gender = Genders.values[data['gender'] ?? 0];
     bmi = bmiCalc(weight ?? 0, height ?? 1);
     fullname = '$name $surname';
-    dailyCalorie = calorieCalc(weight ?? 0, height ?? 1, gender ?? '');
+    dailyCalorie = calorieCalc(weight ?? 0, height ?? 1, gender);
   }
 
   num bmiCalc(num w, num h) {
     return w / ((h * h) / 10000);
   }
 
-  num calorieCalc(num w, num h, String gender) {
+  num calorieCalc(num w, num h, Genders gender) {
     num lmb = 0;
-    if (gender == 'Male') {
+    if (gender == Genders.male) {
       lmb = 0.407 * w + 0.267 * h - 19.2;
-    } else if (gender == 'Female') {
+    } else if (gender == Genders.female) {
       lmb = 0.252 * w + 0.473 * h - 48.3;
     }
-
     return 370 + (21.6 * lmb);
   }
 }
