@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fitness/core/base/routes.dart';
 import 'package:fitness/core/constants/texts.dart';
@@ -21,6 +19,8 @@ class RegisterFormView extends StatefulWidget {
 
 class _RegisterFormViewState extends State<RegisterFormView> {
   UserModel tempUser = UserModel();
+  DateTime? dateOfBirth;
+  Genders? genderValue;
   @override
   void initState() {
     tempUser.phone = widget.phone;
@@ -28,8 +28,6 @@ class _RegisterFormViewState extends State<RegisterFormView> {
     super.initState();
   }
 
-  DateTime? dateOfBirth;
-  Genders genderValue = Genders.none;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,7 +65,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         },
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          labelText: label,
+          labelText: label.tr(),
           suffixText: suffix,
         ),
       ),
@@ -77,22 +75,22 @@ class _RegisterFormViewState extends State<RegisterFormView> {
   Widget genderSelector() {
     return Container(
       margin: const EdgeInsets.all(10),
-      child: DropdownButton<Genders>(
+      child: DropdownButton<Genders?>(
         value: genderValue,
         isExpanded: true,
-        hint: const Text(Texts.gender),
-        items: const [
+        hint: Text(Texts.gender.tr()),
+        items: [
           DropdownMenuItem(
             value: Genders.male,
-            child: Text(Texts.male),
+            child: Text(Texts.male.tr()),
           ),
           DropdownMenuItem(
             value: Genders.female,
-            child: Text(Texts.female),
+            child: Text(Texts.female.tr()),
           ),
         ],
         onChanged: (value) {
-          setState(() => genderValue = value ?? Genders.none);
+          setState(() => genderValue = value);
           updateUser(value, Texts.gender);
         },
       ),
@@ -113,7 +111,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                   Container(
                     alignment: Alignment.center,
                     child: OutlinedButton(
-                        onPressed: () => Navigator.pop(_), child: const Text(Texts.ok)),
+                        onPressed: () => Navigator.pop(_), child: Text(Texts.ok.tr())),
                   ),
                   Expanded(
                     child: CupertinoDatePicker(
@@ -131,9 +129,9 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         child: Card(
           child: ListTile(
             title: Text(
-              dateOfBirth == null ? Texts.birthDate : dateOfBirth.toString().substring(0, 10),
+              dateOfBirth == null ? Texts.birthDate.tr() : dateOfBirth.toString().substring(0, 10),
             ),
-            subtitle: const Text(Texts.taptochange),
+            subtitle: Text(Texts.taptochange.tr()),
           ),
         ),
       ),
@@ -155,12 +153,11 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         tempUser.height = int.tryParse(value) ?? 0;
         break;
       case Texts.birthDate:
-        log('date $value');
         setState(() => dateOfBirth = value);
         tempUser.birthDate = value;
         break;
       case Texts.gender:
-        tempUser.gender = value;
+        tempUser.gender = value ?? Genders.none;
         break;
       default:
     }

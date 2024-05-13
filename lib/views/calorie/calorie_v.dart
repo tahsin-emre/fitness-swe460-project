@@ -32,7 +32,7 @@ class CalorieView extends StatelessWidget {
               onPressed: () {
                 FoodService.foodReq(cont.text).then((value) => null);
               },
-              child: const Text('Add')),
+              child: Text(Texts.add.tr())),
           const SizedBox(height: 10),
           ValueListenableBuilder(
               valueListenable: HiveService.foodBox.listenable(),
@@ -43,9 +43,9 @@ class CalorieView extends StatelessWidget {
                 }
                 return Column(
                   children: [
-                    const Text(
-                      'Your Daily Calorie Tracking',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    Text(
+                      Texts.calorieTitle.tr(),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     Text(
                         '${calc.toStringAsFixed(0)} / ${HiveService.userBox.getAt(0)!.dailyCalorie!.toStringAsFixed(0)} kcal'),
@@ -66,16 +66,15 @@ class CalorieView extends StatelessWidget {
             onPressed: () {
               showDialog(
                   context: context,
-                  builder: (_) => const AlertDialog(
-                        title: Text('Help'),
-                        content: Text(
-                            'A string containing food or drink items. If you wish to calculate a specific quantity, you may prefix a quantity before an item. For example, 3 tomatoes or 1lb beef brisket. If no quantity is specified, the default quantity is 100 grams. Queries cannot exceed 1500 characters.'),
+                  builder: (_) => AlertDialog(
+                        title: Text(Texts.help.tr()),
+                        content: Text(Texts.calorieHelp.tr()),
                       ));
             },
             icon: const Icon(Icons.help_outline))
       ],
       leading: const Icon(Icons.search),
-      hintText: '140 grams rice, 3 tomatoes',
+      hintText: Texts.calorieHint.tr(),
     );
   }
 

@@ -92,7 +92,7 @@ class AuthView extends StatelessWidget {
             countryButtonPadding: null,
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: 20.toRadiusAll()),
-              labelText: Texts.phoneNumber,
+              labelText: Texts.phoneNumber.tr(),
             ),
             isCountrySelectionEnabled: true,
             isCountryButtonPersistent: true,

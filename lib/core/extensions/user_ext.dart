@@ -11,7 +11,7 @@ extension UserExtensions on UserModel {
       'weight': weight,
       'height': height,
       'birthDate': birthDate != null ? Timestamp.fromDate(birthDate!) : null,
-      'gender': gender,
+      'gender': gender.index,
     };
   }
 }

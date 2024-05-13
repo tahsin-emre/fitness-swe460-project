@@ -43,7 +43,7 @@ class UserEditView extends StatelessWidget {
       child: TextField(
         controller: cont,
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(border: const OutlineInputBorder(), labelText: label),
+        decoration: InputDecoration(border: const OutlineInputBorder(), labelText: label.tr()),
       ),
     );
   }

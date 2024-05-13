@@ -9,13 +9,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await EasyLocalization.ensureInitialized();
-  EasyLocalization.logger.enableLevels = [];
+
   runApp(
     EasyLocalization(
       supportedLocales: const [
         Locales.en,
         Locales.tr,
-        Locales.de,
       ],
       startLocale: Locales.en,
       path: Paths.localePath,

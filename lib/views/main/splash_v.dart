@@ -19,18 +19,14 @@ class SplashView extends StatelessWidget {
         Navigator.pushNamedAndRemoveUntil(context, value, (route) => false);
       }
     });
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('SPLASH'),
-      ),
-      body: const Center(
+    return const Scaffold(
+      body: Center(
         child: CircularProgressIndicator(),
       ),
     );
   }
 
   Future<String?> initializeApp() async {
-    // ConnectivityResult cnnct = await Connectivity().checkConnectivity();
     try {
       await HiveService.initialize();
       HiveService.userBox.clear();

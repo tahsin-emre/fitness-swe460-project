@@ -26,7 +26,7 @@ class HomeView extends StatelessWidget {
           ProfileView(context),
         ],
         items: [
-          navItem(FontAwesome.dumbbell_solid, Texts.workout),
+          navItem(FontAwesome.dumbbell_solid, Texts.exercise),
           navItem(FontAwesome.bullseye_solid, Texts.calorie),
           navItem(FontAwesome.user_solid, Texts.profile),
         ],

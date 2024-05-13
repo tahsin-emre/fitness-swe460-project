@@ -1,38 +1,105 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fitness/core/constants/texts.dart';
+import 'package:fitness/core/enums/equipment_enum.dart';
+import 'package:fitness/core/enums/muscle_enum.dart';
 import 'package:fitness/core/extensions/ui_exts.dart';
 import 'package:fitness/models/exercise_model.dart';
 import 'package:fitness/services/hive_service.dart';
 import 'package:fitness/views/workout/exercise_detail_v.dart';
+import 'package:fitness/views/workout/workout_filter_v.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-class WorkoutView extends StatelessWidget {
+class WorkoutView extends StatefulWidget {
   final BuildContext pushContext;
   const WorkoutView(this.pushContext, {super.key});
 
   @override
+  State<WorkoutView> createState() => _WorkoutViewState();
+}
+
+class _WorkoutViewState extends State<WorkoutView> {
+  String query = '';
+  List<int> equipments = [];
+  List<int> muscles = [];
+  @override
+  void initState() {
+    for (var element in Equipments.values) {
+      equipments.add(element.index);
+    }
+    for (var element in Muscles.values) {
+      muscles.add(element.index);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: 10.toEdgeAll(),
-      child: ListView(
-        children: [
-          Padding(
-            padding: 10.toEdgeAll(),
-            child: Text(Texts.workout.tr(), style: const TextStyle(fontSize: 24)),
+    return ValueListenableBuilder(
+        valueListenable: HiveService.exerciseBox.listenable(),
+        builder: (context, box, child) {
+          List<ExerciseModel> filterList = [];
+          for (var element in box.values) {
+            bool isQuery = element.name?.toLowerCase().contains(query.toLowerCase()) ?? false;
+            bool isEquipment =
+                element.equipmentList.any((e) => equipments.any((el) => el == e.index));
+            bool isMuscle = element.muscleList.any((e) => muscles.any((el) => el == e.index));
+            if (isEquipment && isMuscle && isQuery) {
+              filterList.add(element);
+            }
+          }
+          return Container(
+            margin: 10.toEdgeAll(),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: 10.toEdgeAll(),
+                  child: Text(Texts.exercise.tr(), style: const TextStyle(fontSize: 24)),
+                ),
+                const Divider(),
+                filterBox(),
+                const SizedBox(height: 10),
+                exerciseList(filterList),
+              ],
+            ),
+          );
+        });
+  }
+
+  Widget filterBox() {
+    return Row(
+      children: [
+        Expanded(
+          child: SearchBar(
+            leading: const Icon(Icons.search),
+            hintText: 'Dumbbell Curl, Push Up...',
+            onChanged: (value) {
+              query = value;
+              setState(() {});
+            },
           ),
-          const Divider(),
-          const SearchBar(),
-          const SizedBox(height: 10),
-          exerciseList(context),
-        ],
-      ),
+        ),
+        IconButton(
+            onPressed: () async {
+              List<List<int>> filters = await showModalBottomSheet(
+                context: context,
+                enableDrag: false,
+                isDismissible: false,
+                builder: (_) => WorkoutFilterView(equipments, muscles),
+              );
+              equipments = filters[0];
+              muscles = filters[1];
+              setState(() {});
+            },
+            icon: const Icon(Icons.filter_alt))
+      ],
     );
   }
 
-  Widget exerciseList(BuildContext context) {
+  Widget exerciseList(List<ExerciseModel> list) {
     return Column(
       children: [
-        ...HiveService.exerciseBox.values.map((e) => exerciseTile(context, e)),
+        ...list.map((e) => exerciseTile(context, e)),
       ],
     );
   }
@@ -43,7 +110,13 @@ class WorkoutView extends StatelessWidget {
         showDialog(context: context, builder: (_) => ExerciseDetailView(model));
       },
       title: Text(model.name ?? ''),
-      subtitle: Text('Equipments: ${model.equipmentList}'),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('${Texts.equipments.tr()}: ${model.equipmentList}'),
+          Text('${Texts.muscles.tr()}: ${model.muscleList}'),
+        ],
+      ),
     );
   }
 }

@@ -5,8 +5,10 @@ import 'package:fitness/core/extensions/ui_exts.dart';
 import 'package:fitness/models/user_model.dart';
 import 'package:fitness/services/db.dart';
 import 'package:fitness/services/hive_service.dart';
+import 'package:fitness/views/common/lang_selector_v.dart';
 import 'package:fitness/views/profile/user_edit_v.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/adapters.dart';
 
 class ProfileView extends StatelessWidget {
@@ -21,7 +23,12 @@ class ProfileView extends StatelessWidget {
         children: [
           Padding(
             padding: 10.toEdgeAll(),
-            child: Text(Texts.profile.tr(), style: const TextStyle(fontSize: 24)),
+            child: Row(
+              children: [
+                Expanded(child: Text(Texts.profile.tr(), style: const TextStyle(fontSize: 24))),
+                const LanguageSelectorView(),
+              ],
+            ),
           ),
           const Divider(),
           userInfo(),
@@ -81,6 +88,10 @@ class ProfileView extends StatelessWidget {
             ),
             Text(
               user.phone,
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+            Text(
+              'Gender: ${user.gender.name.tr()} kcal',
               style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
             Text(
