@@ -79,8 +79,9 @@ class CalorieView extends StatelessWidget {
   }
 
   Widget foodTile(FoodModel food) {
-    TextStyle style = const TextStyle(fontSize: 13, fontWeight: FontWeight.w600);
+    TextStyle style = const TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
     return Card(
+      elevation: .2,
       child: ListTile(
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -96,16 +97,27 @@ class CalorieView extends StatelessWidget {
         ),
         subtitle: Row(
           children: [
-            expText('Fat: ${food.fat}'),
-            expText('Carb: ${food.carb}'),
-            expText('Protein: ${food.protein}'),
+            expText('Protein:', food.protein.toString()),
+            expText('Carb:', food.carb.toString()),
+            expText('Fat:', food.fat.toString()),
           ],
         ),
       ),
     );
   }
 
-  Widget expText(String text) {
-    return Expanded(child: Text(text));
+  Widget expText(String text, String value) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          Text('$value gr')
+        ],
+      ),
+    );
   }
 }

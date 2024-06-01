@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fitness/core/constants/texts.dart';
 import 'package:fitness/models/exercise_model.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -19,11 +21,13 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
       ..initialize().then((_) {
         controller!.play();
         setState(() {});
-      });
+      })
+      ..setLooping(true);
   }
 
   @override
   Widget build(BuildContext context) {
+    TextStyle style = const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -38,8 +42,14 @@ class _ExerciseDetailViewState extends State<ExerciseDetailView> {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              Text(widget.exercise.muscleList.toString()),
-              Text(widget.exercise.equipmentList.toString()),
+              Text(
+                '${Texts.equipments.tr()}: ${widget.exercise.equipmentList.map((e) => e.name).toString().replaceAll('(', '').replaceAll(')', '')}',
+                style: style,
+              ),
+              Text(
+                '${Texts.muscles.tr()}: ${widget.exercise.muscleList.map((e) => e.name).toString().replaceAll('(', '').replaceAll(')', '')}',
+                style: style,
+              ),
               const SizedBox(height: 10),
             ],
           ),

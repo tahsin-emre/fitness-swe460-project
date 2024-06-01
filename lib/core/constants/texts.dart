@@ -29,9 +29,11 @@ class Texts {
   static const String reset = 'Reset';
   static const String apply = 'Apply';
   static const String help = 'Help';
-  static const String add = 'Add';
+  static const String add = 'Add To List';
   static const String calorieTitle = 'Your Daily Calorie Tracking';
   static const String calorieHint = '140 grams rice, 3 tomatoes...';
   static const String calorieHelp =
       'A string containing food or drink items. If you wish to calculate a specific quantity, you may prefix a quantity before an item. For example, 3 tomatoes or 1lb beef brisket. If no quantity is specified, the default quantity is 100 grams. Queries cannot exceed 1500 characters.';
+  static const String bmr = 'Basal Metabolic Rate';
+  static const String bmi = 'Body Mass Index';
 }

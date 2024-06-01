@@ -9,14 +9,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await EasyLocalization.ensureInitialized();
-
   runApp(
     EasyLocalization(
       supportedLocales: const [
         Locales.en,
         Locales.tr,
+        Locales.de,
+        Locales.fr,
       ],
-      startLocale: Locales.en,
+      saveLocale: true,
       path: Paths.localePath,
       useOnlyLangCode: true,
       child: const FitnessApp(),

@@ -27,6 +27,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+   			<string>com.tahsinemre.fitness</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>app-1-444788873260-ios-6dc1169c26171b94c11989</string>
@@ -39,6 +41,12 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>FitnessApp wants access to your microphone so you can make speaking practice.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>FitnessApp wants access to your microphone so you can make speaking practice.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>FitnessApp wants access to your microphone so you can make speaking practice.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

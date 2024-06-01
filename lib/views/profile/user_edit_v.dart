@@ -25,7 +25,8 @@ class UserEditView extends StatelessWidget {
       actions: [
         OutlinedButton(
           onPressed: () async {
-            UserService.updateUser(num.parse(kgCont.text), num.parse(cmCont.text))
+            UserService.updateUser(num.parse(kgCont.text == '' ? '0' : kgCont.text),
+                    num.parse(cmCont.text == '' ? '0' : cmCont.text))
                 .then((userModel) {
               HiveService.userBox.put(0, userModel);
               Navigator.pop(context);

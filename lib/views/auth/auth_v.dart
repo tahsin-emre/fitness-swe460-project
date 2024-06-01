@@ -7,6 +7,7 @@ import 'package:fitness/core/extensions/ui_exts.dart';
 import 'package:fitness/services/auth_service.dart';
 import 'package:fitness/services/hive_service.dart';
 import 'package:fitness/views/auth/register_form_v.dart';
+import 'package:fitness/views/common/lang_selector_v.dart';
 import 'package:flutter/material.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:pinput/pinput.dart';
@@ -20,6 +21,9 @@ class AuthView extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthService.init();
     return Scaffold(
+      appBar: AppBar(
+        actions: const [LanguageSelectorView()],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

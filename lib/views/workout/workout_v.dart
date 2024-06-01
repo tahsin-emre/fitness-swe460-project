@@ -66,6 +66,21 @@ class _WorkoutViewState extends State<WorkoutView> {
         });
   }
 
+  // Widget sendToDB() {
+  //   return ElevatedButton(
+  //     onPressed: () {
+  //       FirebaseFirestore.instance.collection('exercises').add({
+  //         'name': 'Dumbbell Russian Twist',
+  //         'videoUrl':
+  //             'https://media.musclewiki.com/media/uploads/videos/branded/male-Dumbbells-dumbbell-russian-twist-front.mp4',
+  //         'equipmentList': [4],
+  //         'muscleList': [2],
+  //       });
+  //     },
+  //     child: const Text('Add'),
+  //   );
+  // }
+
   Widget filterBox() {
     return Row(
       children: [
@@ -105,17 +120,25 @@ class _WorkoutViewState extends State<WorkoutView> {
   }
 
   Widget exerciseTile(BuildContext context, ExerciseModel model) {
-    return ListTile(
-      onTap: () {
-        showDialog(context: context, builder: (_) => ExerciseDetailView(model));
-      },
-      title: Text(model.name ?? ''),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('${Texts.equipments.tr()}: ${model.equipmentList}'),
-          Text('${Texts.muscles.tr()}: ${model.muscleList}'),
-        ],
+    return Card(
+      elevation: .2,
+      child: ListTile(
+        onTap: () {
+          showDialog(context: context, builder: (_) => ExerciseDetailView(model));
+        },
+        title: Text(
+          model.name ?? '',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                '${Texts.equipments.tr()}: ${model.equipmentList.map((e) => e.name).toString().replaceAll('(', '').replaceAll(')', '')}'),
+            Text(
+                '${Texts.muscles.tr()}: ${model.muscleList.map((e) => e.name).toString().replaceAll('(', '').replaceAll(')', '')}'),
+          ],
+        ),
       ),
     );
   }
